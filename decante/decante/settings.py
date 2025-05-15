@@ -130,3 +130,7 @@ pymysql.install_as_MySQLdb()
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+INSTALLED_APPS = [
+    'decante_app.apps.DecanteAppConfig',
+    ...
+]
