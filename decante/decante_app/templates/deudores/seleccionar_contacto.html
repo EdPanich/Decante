@@ -1,0 +1,155 @@
+{% extends 'base.html' %} {% block title %}Seleccionar Contacto{% endblock %}
+
+<br />
+{% block content %}
+
+<!-- Sub-navbar estilizada -->
+<div class="subnav">
+	<div class="subnav-left">
+		<div class="titulo">📇 Seleccionar Contacto</div>
+		<div class="total">Total: {{ contactos|length }}</div>
+	</div>
+
+	<div class="subnav-right">
+		<form method="get" class="buscador">
+			<input
+				type="text"
+				name="q"
+				placeholder="Buscar contacto..."
+				value="{{ request.GET.q }}" />
+			<button type="submit">Buscar</button>
+		</form>
+	</div>
+</div>
+
+<!-- Lista de contactos -->
+<div class="contenido">
+	{% for c in contactos %}
+	<div class="card">
+		<h3>{{ c.nombre }}</h3>
+		<p><strong>Tel:</strong> {{ c.telefono }}</p>
+		<p><strong>Dirección:</strong> {{ c.direccion }}</p>
+		<p><strong>Empresa:</strong> {{ c.empresa }}</p>
+		<form action="{% url 'crear_deudor' %}" method="get">
+			<input type="hidden" name="nombre" value="{{ c.nombre }}" />
+			<input type="hidden" name="telefono" value="{{ c.telefono }}" />
+			<input type="hidden" name="direccion" value="{{ c.direccion }}" />
+			<button type="submit">Usar este contacto</button>
+		</form>
+	</div>
+	{% empty %}
+	<p>No hay contactos disponibles.</p>
+	{% endfor %}
+</div>
+
+<!-- Estilos -->
+<style>
+	.subnav {
+		background: #1f1f1f;
+		color: white;
+		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+		border-radius: 0 0 10px 10px;
+	}
+
+	.subnav-left {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.titulo {
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+
+	.total {
+		font-size: 0.95rem;
+		opacity: 0.8;
+	}
+
+	.subnav-right {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.buscador input {
+		padding: 0.3rem 0.6rem;
+		border-radius: 4px;
+		border: none;
+	}
+
+	.buscador button {
+		background: #28a745;
+		color: white;
+		padding: 0.4rem 0.8rem;
+		border: none;
+		border-radius: 4px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.buscador button:hover {
+		background: #218838;
+	}
+
+	.contenido {
+		padding: 1rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1rem;
+	}
+
+	.card {
+		background: white;
+		border-radius: 8px;
+		padding: 1rem;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.card h3 {
+		margin-top: 0;
+	}
+
+	.card form {
+		margin-top: 0.5rem;
+	}
+
+	.card button {
+		background: #007bff;
+		color: white;
+		border: none;
+		padding: 0.4rem 0.8rem;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.card button:hover {
+		background: #0056b3;
+	}
+
+	@media (max-width: 600px) {
+		.subnav {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+
+		.subnav-right {
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		.buscador {
+			width: 100%;
+		}
+
+		.buscador input {
+			width: 100%;
+		}
+	}
+</style>
+{% endblock %}

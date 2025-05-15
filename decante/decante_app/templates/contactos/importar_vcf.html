@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block title %}Importar desde VCF{% endblock %} <br />
+
+{%block content%}
+<h1>Importar Contactos desde tu celular (.vcf)</h1>
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<input type="file" name="archivo" accept=".vcf" required />
+	<button type="submit">Importar</button>
+</form>
+<p>Exporta tus contactos desde tu celular como <strong>.vcf</strong> y súbelos aquí.</p>
+{% endblock %}

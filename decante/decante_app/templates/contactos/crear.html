@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title %}Nuevo Contacto{% endblock %} {%block content%}
+<h1>Agregar Contacto</h1>
+<form method="post">
+	{% csrf_token %} {% for field in form %}
+	<p>
+		{{ field.label_tag }}<br />
+		{{ field }}<br />
+		{% if field.errors %} {% for error in field.errors %}
+		<span style="color: red">{{ error }}</span>
+		{% endfor %} {% endif %}
+	</p>
+	{% endfor %}
+	<button type="submit">Guardar Contacto</button>
+</form>
+{% endblock %}

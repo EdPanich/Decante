@@ -1,24 +1,136 @@
 {% extends 'base.html' %} {% block title %}Deudores{% endblock %} {% block content %}
-<h1>Lista de Deudores</h1>
-<h2>Total adeudado: ${{ balance_total }}</h2>
 
-<form method="get">
-	<input type="text" name="q" placeholder="Buscar deudor..." value="{{ query }}" />
-	<button type="submit">Buscar</button>
-</form>
+<!-- Sub-navbar estilizada -->
+<div class="subnav">
+	<div class="subnav-left">
+		<div class="titulo">💼 Lista de Deudores</div>
+		<div class="total">Total: ${{ balance_total }}</div>
+	</div>
 
-<ul>
-	{% for d in deudores %}
-	<li>
-		{{ d.nombre }} - ${{ d.balance }}
-		<a href="{% url 'crear_deudor' %}" class="floating-button">Agregar Deudor</a>
-		<a href="{% url 'editar_deudor' d.id %}">Editar</a>
-		<a href="{% url 'eliminar_deudor' d.id %}">Eliminar</a>
-	</li>
-	{% empty %}
-	<li>No hay deudores con ese nombre.</li>
-	{% endfor %}
-</ul>
+	<div class="subnav-right">
+		<a href="{% url 'seleccionar_contacto_para_deudor' %}" class="boton"
+			>+ Agregar Deudor</a
+		>
+		<form method="get" class="buscador">
+			<input type="text" name="q" placeholder="Buscar deudor..." value="{{ query }}" />
+			<button type="submit">Buscar</button>
+		</form>
+	</div>
+</div>
 
-<a href="#" class="floating-button">Agregar Deudor</a>
+<!-- Lista -->
+<div class="contenido">
+	<ul>
+		{% for d in deudores %}
+		<li>
+			{{ d.nombre }} - ${{ d.balance }}
+			<a href="{% url 'editar_deudor' d.id %}">Editar</a>
+			<a href="{% url 'eliminar_deudor' d.id %}">Eliminar</a>
+		</li>
+		{% empty %}
+		<li>No hay deudores con ese nombre.</li>
+		{% endfor %}
+	</ul>
+</div>
+
+<!-- Estilo -->
+<style>
+	.subnav {
+		background: #1f1f1f;
+		color: white;
+		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+		border-radius: 0 0 10px 10px;
+	}
+
+	.subnav-left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.titulo {
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+
+	.total {
+		font-size: 0.95rem;
+		opacity: 0.8;
+	}
+
+	.subnav-right {
+		display: flex;
+		gap: 0.8rem;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.boton {
+		background: #007bff;
+		color: white;
+		padding: 0.4rem 0.9rem;
+		border-radius: 6px;
+		text-decoration: none;
+		font-weight: bold;
+		transition: background 0.2s ease-in-out;
+	}
+
+	.boton:hover {
+		background: #0056b3;
+	}
+
+	.buscador {
+		display: flex;
+		gap: 0.3rem;
+	}
+
+	.buscador input {
+		padding: 0.3rem 0.6rem;
+		border: none;
+		border-radius: 4px;
+	}
+
+	.buscador button {
+		padding: 0.3rem 0.8rem;
+		background: #28a745;
+		border: none;
+		border-radius: 4px;
+		color: white;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.buscador button:hover {
+		background: #218838;
+	}
+
+	.contenido {
+		padding: 1rem;
+	}
+
+	@media (max-width: 600px) {
+		.subnav {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.subnav-right {
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		.buscador {
+			width: 100%;
+		}
+
+		.buscador input {
+			flex: 1;
+		}
+	}
+</style>
 {% endblock %}
