@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'decante_app.apps.DecanteAppConfig',
+    'decante_app',
 ]
 
 MIDDLEWARE = [
