@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title %}Nuevo Pedido{% endblock %} {% block content %}
+<h1>Crear Pedido</h1>
+<form method="post">
+	{% csrf_token %} {% for field in form %}
+	<p>
+		{{ field.label_tag }}<br />
+		{{ field }}<br />
+		{% for error in field.errors %}
+		<span style="color: red">{{ error }}</span>
+		{% endfor %}
+	</p>
+	{% endfor %}
+	<button type="submit">Guardar Pedido</button>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block title %}Deudores{% endblock %} {% block content %}
+<h1>Lista de Deudores</h1>
+<h2>Total adeudado: ${{ balance_total }}</h2>
+
+<form method="get">
+	<input type="text" name="q" placeholder="Buscar deudor..." value="{{ query }}" />
+	<button type="submit">Buscar</button>
+</form>
+
+<ul>
+	{% for d in deudores %}
+	<li>
+		{{ d.nombre }} - ${{ d.balance }}
+		<a href="{% url 'crear_deudor' %}" class="floating-button">Agregar Deudor</a>
+		<a href="{% url 'editar_deudor' d.id %}">Editar</a>
+		<a href="{% url 'eliminar_deudor' d.id %}">Eliminar</a>
+	</li>
+	{% empty %}
+	<li>No hay deudores con ese nombre.</li>
+	{% endfor %}
+</ul>
+
+<a href="#" class="floating-button">Agregar Deudor</a>
+{% endblock %}
