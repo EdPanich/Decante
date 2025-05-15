@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-64b6prcl3nknycjypx8rp_#tzcvfn9na+cpi^0!no6bedkza8!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['*']  # o luego el dominio de Railway
+ALLOWED_HOSTS = ['web-production-dc09.up.railway.app']
 
 
 # Application definition
@@ -130,3 +130,4 @@ pymysql.install_as_MySQLdb()
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+CSRF_TRUSTED_ORIGINS = ['https://web-production-dc09.up.railway.app']
