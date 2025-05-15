@@ -36,6 +36,7 @@
 			<a href="{% url 'lista_pedidos' %}">Pedidos</a>
 			<a href="{% url 'lista_contactos' %}">Contactos</a>
 			<a href="{% url 'lista_deudores' %}">Deudores</a>
+			<a href="{% url 'registro' %}">Registrarse</a>
 			{% if user.is_authenticated %}
 			<form action="{% url 'logout' %}" method="post" style="display: inline">
 				{% csrf_token %}
