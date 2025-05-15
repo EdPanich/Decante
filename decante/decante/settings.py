@@ -125,5 +125,8 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'lista_deudores'
 
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
