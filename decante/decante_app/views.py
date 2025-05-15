@@ -14,7 +14,7 @@ from django.shortcuts import render, redirect
 
 
 #_______________________CREAR DEUDOR______________________#
-@login_required
+
 def crear_deudor(request):
     if request.method == 'GET' and any(param in request.GET for param in ['nombre', 'telefono', 'direccion']):
         data = {
@@ -34,7 +34,6 @@ def crear_deudor(request):
 
 
 #_______________________VER DEUDOR______________________#
-@login_required
 def lista_deudores(request):
     query = request.GET.get('q', '')
     deudores = Deudor.objects.all()
@@ -51,7 +50,6 @@ def lista_deudores(request):
     })
 
 #_______________________UPDATE DEUDOR______________________#
-@login_required
 def editar_deudor(request, pk):
     deudor = get_object_or_404(Deudor, pk=pk)
     form = DeudorForm(request.POST or None, instance=deudor)
@@ -61,7 +59,6 @@ def editar_deudor(request, pk):
     return render(request, 'deudores/editar.html', {'form': form})
 
 #_______________________DELETE DEUDOR______________________#
-@login_required
 def eliminar_deudor(request, pk):
     deudor = get_object_or_404(Deudor, pk=pk)
     deudor.delete()
@@ -72,14 +69,12 @@ def eliminar_deudor(request, pk):
 
 
 #_______________________VER PEDIDO______________________#
-@login_required
 def lista_pedidos(request):
     pedidos = Pedido.objects.all()
     return render(request, 'pedidos/lista.html', {'pedidos': pedidos})
 
 
 #_______________________CREAR PEDIDO______________________#
-@login_required
 def crear_pedido(request):
     form = PedidoForm(request.POST or None)
     if form.is_valid():
@@ -95,13 +90,11 @@ def crear_pedido(request):
 
 
 #_______________________VER CONTACTO______________________#
-@login_required
 def lista_contactos(request):
     contactos = Contacto.objects.all()
     return render(request, 'contactos/lista.html', {'contactos': contactos})
 
 #_______________________CREAR CONTACTO______________________#
-@login_required
 def crear_contacto(request):
     form = ContactoForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
@@ -110,7 +103,6 @@ def crear_contacto(request):
     return render(request, 'contactos/crear.html', {'form': form})
 
 #_______________________UPDATE CONTACTO______________________#
-@login_required
 def editar_contacto(request, pk):
     contacto = get_object_or_404(Contacto, pk=pk)
     form = ContactoForm(request.POST or None, instance=contacto)
@@ -120,7 +112,6 @@ def editar_contacto(request, pk):
     return render(request, 'contactos/editar.html', {'form': form})
 
 #_______________________DELETE CONTACTO______________________#
-@login_required
 def eliminar_contacto(request, pk):
     contacto = get_object_or_404(Contacto, pk=pk)
     if request.method == 'POST':
@@ -130,7 +121,6 @@ def eliminar_contacto(request, pk):
 
 #__________________IMPORTAR CONTACTOS_________________________#
 
-@login_required
 def importar_contactos_vcf(request):
     if request.method == 'POST' and request.FILES.get('archivo'):
         vcf_file = request.FILES['archivo']
@@ -166,7 +156,6 @@ def importar_contactos_vcf(request):
 
     return render(request, 'contactos/importar_vcf.html')
 
-@login_required
 def seleccionar_contacto_para_deudor(request):
     query = request.GET.get('q', '')
     contactos = Contacto.objects.all()
@@ -175,7 +164,6 @@ def seleccionar_contacto_para_deudor(request):
     return render(request, 'deudores/seleccionar_contacto.html', {'contactos': contactos})
 
 
-@login_required
 def cobrar(request):
     deudores = Deudor.objects.filter(balance__gt=F('abonos'))
     mensajes = []
@@ -197,15 +185,3 @@ Restan: ${max(d.balance - d.abonos, 0)}"""
 
     return render(request, 'cobrar.html', {'mensajes': mensajes})
 
-
-
-def registro(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('lista_deudores')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/registro.html', {'form': form})

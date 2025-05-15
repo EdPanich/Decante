@@ -16,4 +16,4 @@ class DecanteAppConfig(AppConfig):
                     password='admin123'
                 )
         except OperationalError:
-            pass  # Para evitar error en primera migración
+            pass
